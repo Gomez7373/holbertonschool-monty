@@ -1,80 +1,84 @@
 #include "monty.h"
-/**
-* struct stack_s - doubly linked list representation of a stack
-* @n: integer
-* @prev: points to the previous element of the stack
-* @next: points to the next element of the stack
-*
-* Description: doubly linked list node structure for stack
-*/
-typedef struct stack_s
-{
-int n;                  /* Integer data */
-struct stack_s *prev;   /* Points to the previous element of the stack */
-struct stack_s *next;   /* Points to the next element of the stack */
-} stack_t;
+#include <stdio.h>
+#include <stdlib.h>
 
 /**
-* push - pushes an element onto the stack
-* @stack: double pointer to the head of the stack
-* @line_number: line number in the Monty file
-* @value: value to push onto the stack
-*
-* Return: void
-*/
+ * push - pushes an element onto the stack
+ * @stack: double pointer to the head of the stack
+ * @line_number: line number in the Monty file
+ * @value: value to push onto the stack
+ *
+ * Return: void
+ */
 void push(stack_t **stack, unsigned int line_number, int value)
 {
-stack_t *new_node = malloc(sizeof(stack_t));
+    (void)line_number; /* Unused parameter for now */
 
-if (new_node == NULL)
-{
-fprintf(stderr, "Error: malloc failed\n");
-exit(EXIT_FAILURE);
-}
+    stack_t *new_node = malloc(sizeof(stack_t));
 
-new_node->n = value;
-new_node->prev = NULL;
-new_node->next = *stack;
+    if (new_node == NULL)
+    {
+        fprintf(stderr, "Error: malloc failed\n");
+        exit(EXIT_FAILURE);
+    }
 
-if (*stack != NULL)
-(*stack)->prev = new_node;
+    new_node->n = value;
+    new_node->prev = NULL;
+    new_node->next = *stack;
 
-*stack = new_node;
+    if (*stack != NULL)
+        (*stack)->prev = new_node;
+
+    *stack = new_node;
 }
 
 /**
-* pall - prints all values on the stack
-* @stack: pointer to the head of the stack
-* @line_number: line number in the Monty file
-*
-* Return: void
-*/
+ * pall - prints all values on the stack
+ * @stack: pointer to the head of the stack
+ * @line_number: line number in the Monty file
+ *
+ * Return: void
+ */
 void pall(stack_t *stack, unsigned int line_number)
 {
-(void)line_number; /* Unused parameter */
+    (void)line_number; /* Unused parameter */
 
-while (stack != NULL)
-{
-printf("%d\n", stack->n);
-stack = stack->next;
-}
+    while (stack != NULL)
+    {
+        printf("%d\n", stack->n);
+        stack = stack->next;
+    }
 }
 
 /**
-* main - entry point of the program
-*
-* Return: 0 on success
-*/
-int main(void)
+ * main - Entry point of the Monty interpreter
+ * @argc: Number of command-line arguments
+ * @argv: Array of command-line arguments
+ *
+ * Return: EXIT_SUCCESS on success, EXIT_FAILURE on failure
+ */
+int main(int argc, char *argv[])
 {
-stack_t *stack = NULL; /* Initialize an empty stack */
+    /* Check if the correct number of command-line arguments is provided */
+    if (argc != 2)
+    {
+        fprintf(stderr, "USAGE: monty file\n");
+        exit(EXIT_FAILURE);
+    }
 
-/* Example Monty bytecode: push 1, push 2, push 3, pall */
-push(&stack, 1, 1);
-push(&stack, 2, 2);
-push(&stack, 3, 3);
-pall(stack, 0);
+    /* Open the specified file for reading */
+    FILE *file = fopen(argv[1], "r");
+    if (file == NULL)
+    {
+        fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
+        exit(EXIT_FAILURE);
+    }
 
-return 0;
+    /* TODO: Read and process Monty bytecodes line by line
+       Example: while (fgets(buffer, sizeof(buffer), file) != NULL) { process_instruction(buffer); }
+       Close the file after processing */
+    fclose(file);
+
+    return EXIT_SUCCESS;
 }
 
