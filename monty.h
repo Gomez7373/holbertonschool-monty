@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /**
 * struct stack_s - Doubly linked list representation of a stack (or queue)
@@ -18,19 +19,22 @@ struct stack_s *next;
 } stack_t;
 
 /**
-* push - Adds a new node at the beginning of a stack (or queue)
-* @stack: Pointer to the pointer to the stack (or queue)
-* @line_number: Line number of the opcode being executed
-* @value: Integer value to be added to the stack (or queue)
-*/
-void push(stack_t **stack, unsigned int line_number, int value);
+ * struct instruction_s - opcode and its function
+ * @opcode: the opcode
+ * @f: function to handle the opcode
+ *
+ * Description: opcode and its function
+ * for stack, queues, LIFO, FIFO
+ */
+typedef struct instruction_s
+{
+	char *opcode;
+	void (*f)(stack_t **stack, unsigned int line_number);
+} instruction_t;
 
-/**
-* pall - Prints all the values on a stack (or queue)
-* @stack: Pointer to the stack (or queue)
-* @line_number: Line number of the opcode being executed
-*/
-void pall(stack_t *stack, unsigned int line_number);
+void push(stack_t **stack, int value);
+void pall(stack_t **stack, unsigned int line_number);
+void getopcode(char *filename, stack_t **stack);
 
 #endif /* MONTY_H */
 
