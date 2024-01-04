@@ -13,7 +13,7 @@ ssize_t read;
 while ((read = getline(&line, &len, file)) != -1)
 {
 /* Print the currently read line for indication */
-printf("Processing command: %s", line);
+/*printf("Processing command: %s", line);*/
 
 /* will Implement logic here... */
 execute_monty_command(line);
