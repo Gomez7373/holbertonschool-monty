@@ -21,7 +21,8 @@ stack_t;
 
 extern stack_t *head;
 
-/* Function prototypes */
+/* old  Function prototypes */
+/**
 void free_nodes(void);
 stack_t *create_node(int n);
 void add_to_queue(stack_t **new_node);
@@ -29,6 +30,12 @@ void free_stack(stack_t **stack);
 int execute_monty_command(char *command);
 void process_file(FILE *file);
 FILE *open_file(const char *filename);
+*/
+/*new*/
+void push(int value);
+int pop();
+void pall();
+int main();
 
 /* Inline function definition */
 /**
