@@ -15,8 +15,11 @@ if (argc != 2)
 fprintf(stderr, "USAGE: monty file\n");
 exit(EXIT_FAILURE);
 }
+instruction_t opcodes[] = {{"push", push}, {"pall", pall}, {NULL, NULL}};
 stack_t *stack = NULL;
-getopcode(argv[1], &stack);
 
-return (EXIT_SUCCESS);
+getopcode(argv[1], &stack, opcodes);
+free_stack(&stack);
+
+return (0);
 }
