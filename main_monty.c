@@ -21,5 +21,5 @@ stack_t *stack = NULL;
 getopcode(argv[1], &stack, opcodes);
 free_stack(&stack);
 
-return (EXIT_SUCCESS);
+return (0);
 }
