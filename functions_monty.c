@@ -133,7 +133,7 @@ current = next;
  */
 void invalidCommand(stack_t **stack, FILE *file, unsigned int line, char *cmd)
 {
-	fprintf(stderr, "L%d: unknown instruction %s", line, cmd);
+	fprintf(stderr, "L%d: unknown instruction %s\n", line, cmd);
 	free_stack(stack);
 	fclose(file);
 	free(cmd);
