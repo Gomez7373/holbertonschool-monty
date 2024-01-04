@@ -28,15 +28,14 @@ curr = curr->next;
 */
 void push(stack_t **stack, unsigned int line_number)
 {
-stack_t *new_node = malloc(sizeof(stack_t));
-
 if (number == -3694)
 {
 fprintf(stderr, "L%d: usage: push integer\n", line_number);
-free(new_node);
 free_stack(stack);
 return;
 }
+stack_t *new_node = malloc(sizeof(stack_t));
+
 if (new_node == NULL)
 {
 fprintf(stderr, "Error: malloc failed\n");
@@ -82,6 +81,7 @@ void getopcode(char *filename, stack_t **stack, instruction_t *opcodes)
 		found = 0;
 		if (sscanf(cmd, "%s %s", chunk, number_str) < 1)
 			continue;
+		strtok(cmd, "\n");
 		strtok(chunk, " \t\n");
 		strtok(number_str, " \t\n");
 		number = atoi(number_str);
@@ -93,7 +93,7 @@ void getopcode(char *filename, stack_t **stack, instruction_t *opcodes)
 			{
 				opcodes[i].f(stack, curr_line);
 				found = 1;
-				if (*stack == NULL && strcmp(chunk, "pall") != 0)
+				if (*stack == NULL && strcmp(opcodes[i].opcode, "pall") != 0)
 					fail_exit(file, cmd);
 			}
 		}
