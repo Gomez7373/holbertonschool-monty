@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#define EMPTY_PUSH -3694
+#define FAIL_VAL -4963
 
 extern int number;
 
@@ -39,7 +41,10 @@ void pall(stack_t **stack, unsigned int line_number);
 void getopcode(char *filename, stack_t **stack, instruction_t opcode[]);
 void free_stack(stack_t **stack);
 void invalidCommand(stack_t **stack, FILE *file, unsigned int line, char *cmd);
-void fail_exit(FILE *file, char *cmd);
+void fail_exit(FILE *file, char *cmd, stack_t **stack);
+void pint(stack_t **stack, unsigned int line_number);
+void pop(stack_t **stack, unsigned int line_number);
+void swap(stack_t **stack, unsigned int line_number);
 
 #endif /* MONTY_H */
 
