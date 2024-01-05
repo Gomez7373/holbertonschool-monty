@@ -91,24 +91,18 @@ strtok(number_str, " \t\n");
 number = atoi(number_str);
 if (number == 0 && number_str[0] != '0')
 number = -3694;
-/*-------------------------------------------*/
-printf("Line %d: Opcode: %s\n", curr_line, chunk);
-
 for (i = 0; opcodes[i].opcode != NULL; i++)
 {
-    if (strcmp(chunk, opcodes[i].opcode) == 0)
-    {
-        opcodes[i].f(stack, curr_line);
-        found = 1;
-        if (*stack == NULL && strcmp(opcodes[i].opcode, "pall") != 0)
-            fail_exit(file, cmd);
-    }
+if (strcmp(chunk, opcodes[i].opcode) == 0)
+{
+opcodes[i].f(stack, curr_line);
+found = 1;
+if (*stack == NULL && strcmp(opcodes[i].opcode, "pall") != 0)
+fail_exit(file, cmd);
 }
-
+}
 if (!found)
-    invalidCommand(stack, file, curr_line, cmd);
-
-/*----------------------------------------------------*/
+invalidCommand(stack, file, curr_line, cmd);
 }
 free(cmd);
 fclose(file);
@@ -154,46 +148,3 @@ fclose(file);
 free(cmd);
 exit(EXIT_FAILURE);
 }
-/*--------------------------------------------*/
-
-
-/**
-* pint - prints the value at the top of the stack
-* @stack: pointer to the head of the stack
-* @line_number: line number in the Monty file
-*
-* Return: void
-*/
-
-void pint(stack_t **stack, unsigned int line_number)
-{
-printf("Debug: Inside pint function, stack size: %zu\n", stack_size(*stack));
-
-if (*stack == NULL)
-{
-fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
-free_stack(stack);
-exit(EXIT_FAILURE);
-}
-
-printf("%d\n", (*stack)->n);
-}
-
-
-/*-------------------------------------------------*/
-
-size_t stack_size(stack_t *stack)
-{
-    size_t size = 0;
-    stack_t *current = stack;
-
-    while (current != NULL)
-    {
-        size++;
-        current = current->next;
-    }
-
-    return size;
-}
-
-
