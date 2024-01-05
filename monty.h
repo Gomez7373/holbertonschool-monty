@@ -44,6 +44,7 @@ void invalidCommand(stack_t **stack, FILE *file, unsigned int line, char *cmd);
 void fail_exit(FILE *file, char *cmd, stack_t **stack);
 void pint(stack_t **stack, unsigned int line_number);
 void pop(stack_t **stack, unsigned int line_number);
+void swap(stack_t **stack, unsigned int line_number);
 
 #endif /* MONTY_H */
 

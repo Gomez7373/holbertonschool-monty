@@ -62,3 +62,39 @@ void pop(stack_t **stack, unsigned int line_number)
 		return;
 	}
 }
+
+/**
+ * swap - swaps the top two elements
+ * @stack: targeted stack
+ * @line_number: line where the opcode was call
+ *
+ * Return: void, doesnt return
+ */
+void swap(stack_t **stack, unsigned int line_number)
+{
+	stack_t *curr = *stack;
+	unsigned int len = 0;
+
+	for (; curr != NULL; curr = curr->next)
+	{
+		len++;
+	}
+	if (len >= 2)
+	{
+		curr = *stack;
+		*stack = (*stack)->next;
+		(*stack)->prev = NULL;
+		curr->prev = *stack;
+		curr->next = (*stack)->next;
+		if ((*stack)->next != NULL)
+			(*stack)->next->prev = curr;
+		(*stack)->next = curr;
+	}
+	else
+	{
+		fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
+		number = FAIL_VAL;
+		free_stack(stack);
+		return;
+	}
+}
