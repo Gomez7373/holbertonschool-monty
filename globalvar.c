@@ -1,1 +1,1 @@
-int number;
+extern int number;
