@@ -15,11 +15,21 @@ if (argc != 2)
 fprintf(stderr, "USAGE: monty file\n");
 exit(EXIT_FAILURE);
 }
-instruction_t opcodes[] = {{"push", push}, {"pall", pall}, {NULL, NULL}};
-stack_t *stack = NULL;
 
+/* Define the opcode array for Monty instructions */
+instruction_t opcodes[] = {
+{"push", push},
+{"pall", pall},
+{"pint", pint},
+{NULL, NULL}};
+
+stack_t *stack = NULL;  /* Initialize the stack pointer */
+
+/* Call the Monty interpreter to process the bytecode file */
 getopcode(argv[1], &stack, opcodes);
+
+/* Free the allocated memory for the stack */
 free_stack(&stack);
 
-return (0);
+return (EXIT_SUCCESS);
 }
