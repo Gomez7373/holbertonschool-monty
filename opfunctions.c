@@ -34,3 +34,29 @@ void pint(stack_t **stack, unsigned int line_number)
 		return;
 	}
 }
+
+/**
+ * pop - removes the top element of the stack
+ * @stack: targeted stack
+ * @line_number: Line where command was executed
+ *
+ * Return: void doesnt return
+ */
+void pop(stack_t **stack, unsigned int line_number)
+{
+	stack_t *curr = *stack;
+
+	if (stack != NULL && *stack != NULL)
+	{
+		*stack = (*stack)->next;
+		if (*stack != NULL)
+			(*stack)->prev = NULL;
+		free(curr);
+	}
+	else
+	{
+		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
+		free_stack(stack);
+		return;
+	}
+}
