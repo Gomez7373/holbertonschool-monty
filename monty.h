@@ -40,6 +40,7 @@ void getopcode(char *filename, stack_t **stack, instruction_t opcode[]);
 void free_stack(stack_t **stack);
 void invalidCommand(stack_t **stack, FILE *file, unsigned int line, char *cmd);
 void fail_exit(FILE *file, char *cmd);
+void pint(stack_t **stack, unsigned int line_number);
 
 #endif /* MONTY_H */
 
