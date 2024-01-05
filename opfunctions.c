@@ -7,10 +7,11 @@
 *
 * Return: void, doenst return
 */
-void fail_exit(FILE *file, char *cmd)
+void fail_exit(FILE *file, char *cmd, stack_t **stack)
 {
 fclose(file);
 free(cmd);
+free_stack(stack);
 exit(EXIT_FAILURE);
 }
 
@@ -31,6 +32,7 @@ void pint(stack_t **stack, unsigned int line_number)
 	{
 		fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
 		free_stack(stack);
+		number = FAIL_VAL;
 		return;
 	}
 }
@@ -45,7 +47,6 @@ void pint(stack_t **stack, unsigned int line_number)
 void pop(stack_t **stack, unsigned int line_number)
 {
 	stack_t *curr = *stack;
-
 	if (stack != NULL && *stack != NULL)
 	{
 		*stack = (*stack)->next;
@@ -57,6 +58,7 @@ void pop(stack_t **stack, unsigned int line_number)
 	{
 		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
 		free_stack(stack);
+		number = FAIL_VAL;
 		return;
 	}
 }
