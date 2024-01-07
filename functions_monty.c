@@ -32,7 +32,7 @@ void push(stack_t **stack, unsigned int line_number)
 {
 if (number == EMPTY_PUSH)
 {
-fprintf(stderr, "L%d: usage:push integer\n", line_number);
+fprintf(stderr, "L%d: usage: push integer\n", line_number);
 free_stack(stack);
 number = FAIL_VAL;
 return;
