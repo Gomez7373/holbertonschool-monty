@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define EMPTY_PUSH -3694
-#define FAIL_VAL -4963
+#define EMPTY_PUSH -36941
+#define FAIL_VAL -49638
 
 extern int number;
 
