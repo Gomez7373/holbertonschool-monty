@@ -40,13 +40,14 @@ void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 void getopcode(char *filename, stack_t **stack, instruction_t opcode[]);
 void free_stack(stack_t **stack);
-void invalidCommand(stack_t **stack, FILE *file, unsigned int line, char *cmd);
-void fail_exit(FILE *file, char *cmd, stack_t **stack);
+void NotCmd(stack_t **stack, FILE *file, unsigned int n, char *cmd, char *str);
+void fail_exit(FILE *file, char *cmd, stack_t **stack, char *str);
 void pint(stack_t **stack, unsigned int line_number);
 void pop(stack_t **stack, unsigned int line_number);
 void swap(stack_t **stack, unsigned int line_number);
 void add(stack_t **stack, unsigned int line_number);
 void nop(stack_t **stack, unsigned int line_number);
+char *Allocator(int amount);
 
 #endif /* MONTY_H */
 
