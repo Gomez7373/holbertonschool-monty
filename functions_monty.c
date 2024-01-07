@@ -68,8 +68,8 @@ if (*stack != NULL)
 */
 void getopcode(char *filename, stack_t **stack, instruction_t *opcodes)
 {
-	char *cmd = NULL;
-	char chunk[16], number_str[32];
+	char *cmd = NULL, *number_str = NULL;
+	char chunk[16];
 	size_t len = 0;
 	unsigned int curr_line = 0, found = 0, i;
 	FILE *file = fopen(filename, "r");
@@ -79,6 +79,7 @@ void getopcode(char *filename, stack_t **stack, instruction_t *opcodes)
 	fprintf(stderr, "Error: Can't open file %s\n", filename);
 	exit(EXIT_FAILURE);
 	}
+	number_str = Allocator(64);
 	while (getline(&cmd, &len, file) != -1)
 	{
 		number_str[0] = '\0';
@@ -86,7 +87,6 @@ void getopcode(char *filename, stack_t **stack, instruction_t *opcodes)
 		found = 0;
 		if (sscanf(cmd, "%s %s", chunk, number_str) < 1)
 			continue;
-		strtok(cmd, "\n");
 		strtok(chunk, " \t\n");
 		strtok(number_str, " \t\n");
 		number = atoi(number_str);
@@ -99,12 +99,13 @@ void getopcode(char *filename, stack_t **stack, instruction_t *opcodes)
 				opcodes[i].f(stack, curr_line);
 				found = 1;
 				if (number == FAIL_VAL)
-					fail_exit(file, cmd, stack);
+					fail_exit(file, cmd, stack, number_str);
 			}
 		}
 		if (!found)
-			invalidCommand(stack, file, curr_line, cmd);
+			NotCmd(stack, file, curr_line, cmd, number_str);
 	}
+	free(number_str);
 	free(cmd);
 	fclose(file);
 }
@@ -133,19 +134,21 @@ current = next;
 /*-----------------------------------------*/
 
 /**
-* invalidCommand - prints error when no command is found
+* NotCmd - prints error when no command is found
 * @stack: the stack to free
 * @file: file to close before exit
-* @line: in what line the error happen
+* @n: in what line the error happen
 * @cmd: what command was tried
+* @str: memory to free
 *
 * Return: void, doenst return
 */
-void invalidCommand(stack_t **stack, FILE *file, unsigned int line, char *cmd)
+void NotCmd(stack_t **stack, FILE *file, unsigned int n, char *cmd, char *str)
 {
-fprintf(stderr, "L%d: unknown instruction %s\n", line, cmd);
+fprintf(stderr, "L%d: unknown instruction %s\n", n, cmd);
 free_stack(stack);
 fclose(file);
+free(str);
 free(cmd);
 exit(EXIT_FAILURE);
 }
