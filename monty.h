@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #define EMPTY_PUSH -36941
 #define FAIL_VAL -49638
 
@@ -48,7 +49,7 @@ void swap(stack_t **stack, unsigned int line_number);
 void add(stack_t **stack, unsigned int line_number);
 void nop(stack_t **stack, unsigned int line_number);
 char *Allocator(int amount);
-void testingFunc(char *str, char *file);
+int validInt(char *str);
 
 #endif /* MONTY_H */
 
