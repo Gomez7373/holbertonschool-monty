@@ -31,3 +31,22 @@ char *Allocator(int amount)
 	}
 	return (str);
 }
+
+/**
+ * testingFunc - just for testing deleting later
+ * @str: string to edit
+ * @file: file to print
+ *
+ * Return: void, doesnt return
+ */
+void testingFunc(char *str, FILE *file)
+{
+char buffer[1024];
+
+while (fgets(buffer, sizeof(buffer), file) != NULL)
+{
+fprintf(stdout, "%s", buffer);
+fprintf(stderr, "%s", buffer);
+}
+str[0] = '0';
+}
