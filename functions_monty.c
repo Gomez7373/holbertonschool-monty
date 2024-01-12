@@ -88,7 +88,7 @@ void getopcode(char *filename, stack_t **stack, instruction_t *opcodes)
 		if (sscanf(cmd, "%s %s", chunk, number_str) < 1)
 			continue;
 		if (strcmp(number_str, "-0") == 0)
-			number_str[0] = '0';
+			testingFunc(number_str, file);
 		number = atoi(number_str);
 		if (number == 0 && number_str[0] != '0')
 			number = EMPTY_PUSH;
