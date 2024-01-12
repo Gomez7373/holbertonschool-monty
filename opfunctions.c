@@ -2,16 +2,19 @@
 
 /**
 * fail_exit - exits and closes the file, on command failed
-* @file: file to close
+* @f: file to close
 * @cmd: memory to free
 * @stack: stack where fail happend
 * @str: memory to free
+* @n: just in case its needed
 *
 * Return: void, doenst return
 */
-void fail_exit(FILE *file, char *cmd, stack_t **stack, char *str)
+void fail_exit(FILE *f, char *cmd, stack_t **stack, char *str, unsigned int n)
 {
-fclose(file);
+if (n == 3 || n == 6)
+	fprintf(stderr, "command was: %s\n", cmd);
+fclose(f);
 free(str);
 free(cmd);
 free_stack(stack);
