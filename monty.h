@@ -6,7 +6,6 @@
 #include <string.h>
 #define EMPTY_PUSH -36941
 #define FAIL_VAL -49638
-#define DEFAULT -34689
 
 extern int number;
 
