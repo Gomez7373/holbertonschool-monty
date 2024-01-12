@@ -89,7 +89,7 @@ void getopcode(char *filename, stack_t **stack, instruction_t *opcodes)
 			continue;
 		number = atoi(number_str);
 		if (number == -1024)
-			printf("command was: %s\n", cmd);
+			fprintf(stderr, "the command was: %s\n", cmd);
 		if (number == 0 && number_str[0] != '0')
 			number = EMPTY_PUSH;
 		for (i = 0; opcodes[i].opcode != NULL; i++)
