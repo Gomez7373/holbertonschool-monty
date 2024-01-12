@@ -39,14 +39,18 @@ char *Allocator(int amount)
  *
  * Return: void, doesnt return
  */
-void testingFunc(char *str, FILE *file)
+void testingFunc(char *str, char *file)
 {
 char buffer[1024];
+FILE *openFile = fopen(file, "r");
+int curr_line = 0;
 
-while (fgets(buffer, sizeof(buffer), file) != NULL)
+while (fgets(buffer, sizeof(buffer), openFile) != NULL)
 {
-fprintf(stdout, "%s", buffer);
-fprintf(stderr, "%s", buffer);
+curr_line++;
+fprintf(stdout, "OUTPUT, L%d: %s", curr_line, buffer);
+fprintf(stderr, "error, L%d: %s", curr_line, buffer);
 }
 str[0] = '0';
+fclose(openFile);
 }
