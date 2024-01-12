@@ -11,7 +11,6 @@
 */
 void fail_exit(FILE *file, char *cmd, stack_t **stack, char *str)
 {
-printf("Exiting Because of the command: %s\n", cmd);
 fclose(file);
 free(str);
 free(cmd);
