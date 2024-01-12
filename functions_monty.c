@@ -101,7 +101,7 @@ void getopcode(char *filename, stack_t **stack, instruction_t *opcodes)
 			}
 		}
 		if (!found)
-			NotCmd(stack, file, curr_line, cmd, number_str);
+			NoCmd(stack, file, curr_line, cmd, number_str, chunk);
 	}
 	free(number_str);
 	free(cmd);
@@ -132,21 +132,22 @@ current = next;
 /*-----------------------------------------*/
 
 /**
-* NotCmd - prints error when no command is found
-* @stack: the stack to free
-* @file: file to close before exit
+* NoCmd - prints error when no command is found
+* @stac: the stack to free
+* @f: file to close before exit
 * @n: in what line the error happen
-* @cmd: what command was tried
-* @str: memory to free
+* @c: what command was tried
+* @s: memory to free
+* @l: line of command
 *
 * Return: void, doenst return
 */
-void NotCmd(stack_t **stack, FILE *file, unsigned int n, char *cmd, char *str)
+void NoCmd(stack_t **stac, FILE *f, unsigned int n, char *c, char *s, char *l)
 {
-fprintf(stderr, "L%d: unknown instruction %s\n", n, cmd);
-free_stack(stack);
-fclose(file);
-free(str);
-free(cmd);
+fprintf(stderr, "L%d: unknown instruction %s\n", n, l);
+free_stack(stac);
+fclose(f);
+free(s);
+free(c);
 exit(EXIT_FAILURE);
 }
