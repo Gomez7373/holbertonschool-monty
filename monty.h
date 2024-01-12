@@ -40,7 +40,7 @@ void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 void getopcode(char *filename, stack_t **stack, instruction_t opcode[]);
 void free_stack(stack_t **stack);
-void NotCmd(stack_t **stack, FILE *file, unsigned int n, char *cmd, char *str);
+void NoCmd(stack_t **stac, FILE *f, unsigned int n, char *c, char *s, char *l);
 void fail_exit(FILE *file, char *cmd, stack_t **stack, char *str);
 void pint(stack_t **stack, unsigned int line_number);
 void pop(stack_t **stack, unsigned int line_number);
