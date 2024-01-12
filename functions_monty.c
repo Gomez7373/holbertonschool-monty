@@ -85,6 +85,7 @@ void getopcode(char *filename, stack_t **stack, instruction_t *opcodes)
 		number_str[0] = '\0';
 		curr_line++;
 		found = 0;
+		number = DEFAULT;
 		if (sscanf(cmd, "%s %s", chunk, number_str) < 1)
 			continue;
 		number = atoi(number_str);
