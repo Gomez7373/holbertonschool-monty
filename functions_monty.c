@@ -88,8 +88,6 @@ void getopcode(char *filename, stack_t **stack, instruction_t *opcodes)
 		if (sscanf(cmd, "%s %s", chunk, number_str) < 1)
 			continue;
 		number = atoi(number_str);
-		if (number == -1024)
-			fprintf(stderr, "the command was: %s\n", cmd);
 		if (number == 0 && number_str[0] != '0')
 			number = EMPTY_PUSH;
 		for (i = 0; opcodes[i].opcode != NULL; i++)
@@ -99,7 +97,7 @@ void getopcode(char *filename, stack_t **stack, instruction_t *opcodes)
 				opcodes[i].f(stack, curr_line);
 				found = 1;
 				if (number == FAIL_VAL)
-					fail_exit(file, cmd, stack, number_str);
+					fail_exit(file, cmd, stack, number_str, curr_line);
 			}
 		}
 		if (!found)
