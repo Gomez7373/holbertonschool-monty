@@ -87,6 +87,8 @@ void getopcode(char *filename, stack_t **stack, instruction_t *opcodes)
 		found = 0;
 		if (sscanf(cmd, "%s %s", chunk, number_str) < 1)
 			continue;
+		if (strcmp(number_str, "-0") == 0)
+			number_str[0] = '0';
 		number = atoi(number_str);
 		if (number == 0 && number_str[0] != '0')
 			number = EMPTY_PUSH;
@@ -97,7 +99,7 @@ void getopcode(char *filename, stack_t **stack, instruction_t *opcodes)
 				opcodes[i].f(stack, curr_line);
 				found = 1;
 				if (number == FAIL_VAL)
-					fail_exit(file, cmd, stack, number_str, curr_line);
+					fail_exit(file, cmd, stack, number_str);
 			}
 		}
 		if (!found)
