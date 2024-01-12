@@ -33,24 +33,28 @@ char *Allocator(int amount)
 }
 
 /**
- * testingFunc - just for testing deleting later
- * @str: string to edit
- * @file: file to print
+ * validInt - verify string for valid ints
+ * @str: string to check/edit
  *
  * Return: void, doesnt return
  */
-void testingFunc(char *str, char *file)
+int validInt(char *str)
 {
-char buffer[1024];
-FILE *openFile = fopen(file, "r");
-int curr_line = 0;
+	int i;
+	int is_digit = 1;
 
-while (fgets(buffer, sizeof(buffer), openFile) != NULL)
-{
-curr_line++;
-fprintf(stdout, "OUTPUT, L%d: %s", curr_line, buffer);
-fprintf(stderr, "error, L%d: %s", curr_line, buffer);
-}
-str[0] = '0';
-fclose(openFile);
+	if (strcmp(str, "-0") == 0)
+		str[0] = '0';
+
+	for (i = 0; str[i] != '\0'; i++)
+	{
+		if (i == 0 && str[i] == '-')
+			continue;
+		if (!isdigit(str[i]))
+			is_digit = 0;
+	}
+	if (is_digit)
+		return (atoi(str));
+	else
+		return (0);
 }
