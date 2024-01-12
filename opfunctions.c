@@ -6,14 +6,11 @@
 * @cmd: memory to free
 * @stack: stack where fail happend
 * @str: memory to free
-* @n: just in case its needed
 *
 * Return: void, doenst return
 */
-void fail_exit(FILE *f, char *cmd, stack_t **stack, char *str, unsigned int n)
+void fail_exit(FILE *f, char *cmd, stack_t **stack, char *str)
 {
-if (n == 3 || n == 6)
-	fprintf(stderr, "command was: %s\n", cmd);
 fclose(f);
 free(str);
 free(cmd);
