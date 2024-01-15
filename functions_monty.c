@@ -68,8 +68,8 @@ if (*stack != NULL)
 */
 void getopcode(char *filename, stack_t **stack, instruction_t *opcodes)
 {
-	char *cmd = NULL;
-	char chunk[16], number_str[32];
+	char *cmd = NULL, *number_str = NULL;
+	char chunk[16];
 	size_t len = 0;
 	unsigned int curr_line = 0, found = 0, i;
 	FILE *file = fopen(filename, "r");
@@ -79,6 +79,7 @@ void getopcode(char *filename, stack_t **stack, instruction_t *opcodes)
 	fprintf(stderr, "Error: Can't open file %s\n", filename);
 	exit(EXIT_FAILURE);
 	}
+	number_str = Allocator(64);
 	while (getline(&cmd, &len, file) != -1)
 	{
 		number_str[0] = '\0';
@@ -86,10 +87,7 @@ void getopcode(char *filename, stack_t **stack, instruction_t *opcodes)
 		found = 0;
 		if (sscanf(cmd, "%s %s", chunk, number_str) < 1)
 			continue;
-		strtok(cmd, "\n");
-		strtok(chunk, " \t\n");
-		strtok(number_str, " \t\n");
-		number = atoi(number_str);
+		number = validInt(number_str);
 		if (number == 0 && number_str[0] != '0')
 			number = EMPTY_PUSH;
 		for (i = 0; opcodes[i].opcode != NULL; i++)
@@ -99,12 +97,13 @@ void getopcode(char *filename, stack_t **stack, instruction_t *opcodes)
 				opcodes[i].f(stack, curr_line);
 				found = 1;
 				if (number == FAIL_VAL)
-					fail_exit(file, cmd, stack);
+					fail_exit(file, cmd, stack, number_str);
 			}
 		}
 		if (!found)
-			invalidCommand(stack, file, curr_line, cmd);
+			NoCmd(stack, file, curr_line, cmd, number_str, chunk);
 	}
+	free(number_str);
 	free(cmd);
 	fclose(file);
 }
@@ -133,19 +132,22 @@ current = next;
 /*-----------------------------------------*/
 
 /**
-* invalidCommand - prints error when no command is found
-* @stack: the stack to free
-* @file: file to close before exit
-* @line: in what line the error happen
-* @cmd: what command was tried
+* NoCmd - prints error when no command is found
+* @stac: the stack to free
+* @f: file to close before exit
+* @n: in what line the error happen
+* @c: what command was tried
+* @s: memory to free
+* @l: line of command
 *
 * Return: void, doenst return
 */
-void invalidCommand(stack_t **stack, FILE *file, unsigned int line, char *cmd)
+void NoCmd(stack_t **stac, FILE *f, unsigned int n, char *c, char *s, char *l)
 {
-fprintf(stderr, "L%d: unknown instruction %s\n", line, cmd);
-free_stack(stack);
-fclose(file);
-free(cmd);
+fprintf(stderr, "L%d: unknown instruction %s\n", n, l);
+free_stack(stac);
+fclose(f);
+free(s);
+free(c);
 exit(EXIT_FAILURE);
 }

@@ -2,15 +2,17 @@
 
 /**
 * fail_exit - exits and closes the file, on command failed
-* @file: file to close
+* @f: file to close
 * @cmd: memory to free
 * @stack: stack where fail happend
+* @str: memory to free
 *
 * Return: void, doenst return
 */
-void fail_exit(FILE *file, char *cmd, stack_t **stack)
+void fail_exit(FILE *f, char *cmd, stack_t **stack, char *str)
 {
-fclose(file);
+fclose(f);
+free(str);
 free(cmd);
 free_stack(stack);
 exit(EXIT_FAILURE);
